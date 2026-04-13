@@ -1,0 +1,168 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Design System ───────────────────────────── */
+
+@theme inline {
+  /* shadcn semantic tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Border radius scale — soft, modern */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-3xl: 3rem;
+
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Extended palette — direct Tailwind utilities */
+  --color-surface: #f8f9fa;
+  --color-surface-container-low: #f1f4f6;
+  --color-surface-container: #eaeff1;
+  --color-surface-container-high: #e2e9ec;
+  --color-surface-container-highest: #dbe4e7;
+  --color-surface-dim: #d1dce0;
+  --color-surface-bright: #f8f9fa;
+  --color-on-surface: #2b3437;
+  --color-on-surface-variant: #586064;
+  --color-outline: #737c7f;
+  --color-outline-variant: #abb3b7;
+  --color-primary-container: #e2dfff;
+  --color-on-primary-container: #3f33d6;
+  --color-primary-dim: #4034d7;
+  --color-tertiary: #575e78;
+  --color-tertiary-container: #d2d9f8;
+  --color-on-tertiary-container: #444c65;
+  --color-error-container: #ff8b9a;
+  --color-on-error-container: #782232;
+}
+
+:root {
+  --background: #f9fafb;
+  --foreground: #2b3437;
+  --card: #ffffff;
+  --card-foreground: #2b3437;
+  --popover: #ffffff;
+  --popover-foreground: #2b3437;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f4f6;
+  --secondary-foreground: #2b3437;
+  --muted: #f1f4f6;
+  --muted-foreground: #586064;
+  --accent: #e2dfff;
+  --accent-foreground: #3f33d6;
+  --destructive: #dc304a;
+  --border: rgba(171, 179, 183, 0.25);
+  --input: rgba(171, 179, 183, 0.2);
+  --ring: #4f46e5;
+  --radius: 1rem;
+}
+
+.dark {
+  --background: #0f1117;
+  --foreground: #e8eaed;
+  --card: #1a1d27;
+  --card-foreground: #e8eaed;
+  --popover: #1a1d27;
+  --popover-foreground: #e8eaed;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #1e2130;
+  --secondary-foreground: #e8eaed;
+  --muted: #1e2130;
+  --muted-foreground: #8b95a1;
+  --accent: #2d3261;
+  --accent-foreground: #a5b4fc;
+  --destructive: #dc304a;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.06);
+  --ring: #6366f1;
+}
+
+/* ─── Base Layer ───────────────────────────────────────────── */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-manrope), var(--font-heading), sans-serif;
+  }
+}
+
+/* ─── Dot-grid background pattern for dashboard ────────────── */
+
+.dot-grid {
+  background-image: radial-gradient(circle, #d1dce0 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .dot-grid {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+}
+
+/* ─── Shimmer animation for skeletons ──────────────────────── */
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #eaeff1 25%, #f1f4f6 50%, #eaeff1 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.dark .shimmer {
+  background: linear-gradient(90deg, #1e2130 25%, #242840 50%, #1e2130 75%);
+  background-size: 800px 100%;
+}

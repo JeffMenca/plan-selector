@@ -1,0 +1,13 @@
+import { PageTransition } from "@/components/layout/PageTransition";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
+
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
+      <PageTransition>{children}</PageTransition>
+    </>
+  );
+}
