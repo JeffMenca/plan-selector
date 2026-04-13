@@ -46,8 +46,14 @@ Plan search application with user authentication and a results dashboard that co
    | ------------------------------- | ------------------------------------------------- |
    | `NEXT_PUBLIC_SUPABASE_URL`      | Your Supabase project URL                         |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Your Supabase anon/public key                     |
+   | `NEXT_PUBLIC_SITE_URL`          | Public app URL (for auth email redirects)         |
    | `PLANS_API_BASE_URL`            | Full URL of the external plan search API endpoint |
    | `PLANS_API_KEY`                 | API key for the external plan search service      |
+
+   For production (Vercel + Supabase Auth), also verify:
+   - In Supabase Dashboard -> Authentication -> URL Configuration:
+   - Site URL: `https://your-domain.com`
+   - Additional Redirect URLs includes: `https://your-domain.com/auth/callback`
 
 4. **Run the development server**
 

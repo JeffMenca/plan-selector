@@ -35,6 +35,32 @@ function translateError(message: string): string {
   return message;
 }
 
+function getBaseUrl(headersList: Headers): string {
+  const explicitSiteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.SITE_URL;
+
+  if (explicitSiteUrl) {
+    return explicitSiteUrl.replace(/\/$/, "");
+  }
+
+  const origin = headersList.get("origin");
+  if (origin) {
+    return origin.replace(/\/$/, "");
+  }
+
+  const forwardedHost = headersList.get("x-forwarded-host");
+  const host = forwardedHost ?? headersList.get("host");
+  const protocol = headersList.get("x-forwarded-proto") ?? "https";
+
+  if (host) {
+    return `${protocol}://${host}`.replace(/\/$/, "");
+  }
+
+  return "http://localhost:3000";
+}
+
 export async function signIn(formData: FormData) {
   const supabase = await createClient();
 
@@ -54,16 +80,13 @@ export async function signIn(formData: FormData) {
 export async function signUp(formData: FormData) {
   const supabase = await createClient();
   const headersList = await headers();
-  const origin =
-    headersList.get("origin") ??
-    headersList.get("x-forwarded-host") ??
-    "http://localhost:3000";
+  const baseUrl = getBaseUrl(headersList);
 
   const { data, error } = await supabase.auth.signUp({
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${baseUrl}/auth/callback`,
     },
   });
 
